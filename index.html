@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ForensicLab | Digital Forensics Training & Recovery Simulator</title>
+  <meta name="description" content="Safe simulated digital forensics practice platform for investigating corrupt filesystems, recovering deleted files, inspecting MACB metadata, and reconstructing forensic timelines.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/explorer.css">
+  <link rel="stylesheet" href="css/report.css">
+</head>
+<body>
+  <div id="app-root">
+    <!-- Master Persistent Sidebar -->
+    <aside id="main-sidebar" class="sidebar" style="display: none;">
+      <div class="sidebar-header">
+        <div class="brand-icon" data-icon="shield"></div>
+        <div class="sidebar-logo-text">
+          <span class="sidebar-title">ForensicLab</span>
+          <span class="sidebar-subtitle">Training Platform</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Core Modules</div>
+        <a class="nav-item active" data-nav-screen="dashboard">
+          <span class="nav-item-icon" data-icon="cpu"></span>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-nav-screen="scenarios">
+          <span class="nav-item-icon" data-icon="database"></span>
+          <span>Scenarios</span>
+        </a>
+
+        <div class="nav-section-title">Investigation Bench</div>
+        <a class="nav-item" data-nav-screen="explorer">
+          <span class="nav-item-icon" data-icon="folder"></span>
+          <span>File Explorer</span>
+        </a>
+        <a class="nav-item" data-nav-screen="recovery">
+          <span class="nav-item-icon" data-icon="refreshCw"></span>
+          <span>File Recovery</span>
+          <span id="sidebar-recovery-badge" class="nav-item-badge" style="display:none;">0</span>
+        </a>
+        <a class="nav-item" data-nav-screen="metadata">
+          <span class="nav-item-icon" data-icon="search"></span>
+          <span>Metadata Analysis</span>
+        </a>
+        <a class="nav-item" data-nav-screen="timeline">
+          <span class="nav-item-icon" data-icon="clock"></span>
+          <span>Timeline Builder</span>
+        </a>
+        <a class="nav-item" data-nav-screen="evidence">
+          <span class="nav-item-icon" data-icon="shield"></span>
+          <span>Evidence Validation</span>
+          <span id="sidebar-evidence-badge" class="nav-item-badge" style="display:none;">0</span>
+        </a>
+
+        <div class="nav-section-title">Evaluation & Audit</div>
+        <a class="nav-item" data-nav-screen="results">
+          <span class="nav-item-icon" data-icon="checkCircle"></span>
+          <span>Investigation Results</span>
+        </a>
+        <a class="nav-item" data-nav-screen="score">
+          <span class="nav-item-icon" data-icon="award"></span>
+          <span>Score & Feedback</span>
+        </a>
+        <a class="nav-item" data-nav-screen="report">
+          <span class="nav-item-icon" data-icon="fileText"></span>
+          <span>Forensic Report</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar" id="sidebar-user-avatar">TR</div>
+          <div class="user-details">
+            <span class="user-name" id="sidebar-user-name">trainee</span>
+            <span class="user-role">Cadet Investigator</span>
+          </div>
+        </div>
+        <button id="sidebar-logout-btn" class="logout-btn" title="Sign Out">
+          <div style="width:18px;height:18px;" data-icon="logOut"></div>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Flow Wrapper -->
+    <div class="main-content-wrapper">
+      <!-- Master TopBar -->
+      <header id="main-topbar" class="topbar" style="display: none;">
+        <div class="topbar-left">
+          <div class="topbar-environment-badge">
+            <span class="environment-dot"></span>
+            <span>Training Sandbox v4.2</span>
+          </div>
+
+          <div class="topbar-warning-banner">
+            <span style="width:14px;height:14px;color:var(--amber-warning);" data-icon="alertTriangle"></span>
+            <span>SIMULATED TRAINING ENVIRONMENT — NO REAL FILE SYSTEM ACCESS</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div id="topbar-scenario-pill" class="badge badge-active" style="display:none; align-items:center; gap:6px;"></div>
+
+          <div class="investigation-timer-pill" title="Elapsed Investigation Time">
+            <span style="width:14px;height:14px;" data-icon="clock"></span>
+            <span id="investigation-timer-display">00:00:00</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- 1. LOGIN SCREEN -->
+      <section id="screen-login" class="screen-container">
+        <div class="card" style="width: 100%; max-width: 440px; padding: 36px 32px; border-color: var(--border-bright); box-shadow: 0 12px 48px rgba(0,0,0,0.8), var(--glow-cyan);">
+          <div style="text-align: center; margin-bottom: 28px;">
+            <div style="width: 52px; height: 52px; margin: 0 auto 14px; color: var(--cyan-glow);" data-icon="shield"></div>
+            <h1 style="font-size: 1.6rem; font-weight: 800; color: #fff; letter-spacing: -0.02em;">
+              ForensicLab
+            </h1>
+            <p style="color: var(--cyan-glow); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px;">
+              Digital Forensics Training & Recovery Simulator
+            </p>
+            <div style="margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--green-success); font-size: 0.72rem; padding: 3px 10px; border-radius: 999px;">
+              <span class="environment-dot"></span>
+              <span>Training Sandbox Active</span>
+            </div>
+          </div>
+
+          <div id="login-error-msg" style="display: none; background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.4); color: #fb7185; padding: 10px; border-radius: var(--radius-sm); font-size: 0.78rem; margin-bottom: 16px; text-align: center;"></div>
+
+          <form id="login-form">
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">
+                Investigator Username (Choose Any)
+              </label>
+              <input type="text" id="login-username" class="search-input" value="trainee" required style="width: 100%; height: 40px; font-size: 0.85rem;" placeholder="Enter any username of your choice">
+            </div>
+
+            <div style="margin-bottom: 18px;">
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">
+                Passphrase / Password (Choose Any)
+              </label>
+              <input type="password" id="login-password" class="search-input" value="forensic123" required style="width: 100%; height: 40px; font-size: 0.85rem;" placeholder="Enter any password of your choice">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; font-size: 0.78rem;">
+              <label style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); cursor: pointer;">
+                <input type="checkbox" checked style="accent-color: var(--cyan-glow);">
+                <span>Remember Credentials</span>
+              </label>
+              <span style="color: var(--cyan-glow); font-family: var(--font-mono); font-size: 0.7rem;">Any credentials accepted</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full btn-lg" style="margin-bottom: 12px;">
+              Authenticate & Enter Lab
+            </button>
+
+            <button type="button" id="login-demo-btn" class="btn btn-cyber-outline w-full">
+              <span style="width:16px;height:16px;" data-icon="terminal"></span>
+              Demo Mode (Quick Launch Scenario)
+            </button>
+          </form>
+
+          <div style="margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--border-subtle); text-align: center; font-size: 0.7rem; color: var(--text-muted);">
+            Isolated forensic sandbox container. Zero access to host filesystem.
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. TRAINING DASHBOARD -->
+      <section id="screen-dashboard" class="screen-container">
+        <div id="dashboard-content"></div>
+      </section>
+
+      <!-- 3. SCENARIO SELECTION -->
+      <section id="screen-scenarios" class="screen-container">
+        <div id="scenarios-content"></div>
+      </section>
+
+      <!-- 4. VIRTUAL FILE-SYSTEM EXPLORER -->
+      <section id="screen-explorer" class="screen-container">
+        <div id="explorer-content"></div>
+      </section>
+
+      <!-- 5. DELETED FILE RECOVERY -->
+      <section id="screen-recovery" class="screen-container">
+        <div id="recovery-content"></div>
+      </section>
+
+      <!-- 6. METADATA ANALYSIS -->
+      <section id="screen-metadata" class="screen-container">
+        <div id="metadata-content"></div>
+      </section>
+
+      <!-- 7. TIMELINE RECONSTRUCTION -->
+      <section id="screen-timeline" class="screen-container">
+        <div id="timeline-content"></div>
+      </section>
+
+      <!-- 8. EVIDENCE VALIDATION -->
+      <section id="screen-evidence" class="screen-container">
+        <div id="evidence-content"></div>
+      </section>
+
+      <!-- 9. INVESTIGATION RESULTS -->
+      <section id="screen-results" class="screen-container">
+        <div id="results-content"></div>
+      </section>
+
+      <!-- 10. SCORE & FEEDBACK -->
+      <section id="screen-score" class="screen-container">
+        <div id="score-content"></div>
+      </section>
+
+      <!-- 11. FORENSIC REPORT -->
+      <section id="screen-report" class="screen-container">
+        <div id="report-content"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Bootstrap Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

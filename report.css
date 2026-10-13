@@ -1,0 +1,198 @@
+/* ==========================================================================
+   FORENSICLAB - DIGITAL FORENSIC INVESTIGATION REPORT STYLING
+   ========================================================================== */
+
+.report-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+.report-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  background: var(--bg-card);
+  padding: 16px 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.report-document {
+  background: #0b1322;
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: var(--radius-md);
+  padding: 48px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
+  color: #e2e8f0;
+  position: relative;
+}
+
+.report-document::before {
+  content: 'CONFIDENTIAL // FORENSIC TRAINING REPORT';
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--cyan-glow);
+  opacity: 0.6;
+}
+
+.report-header {
+  border-bottom: 2px solid var(--cyan-glow);
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.report-title-block h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.report-title-block h2 {
+  font-size: 0.95rem;
+  color: var(--cyan-glow);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.report-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  font-size: 0.82rem;
+}
+
+.report-meta-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.report-meta-key {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.report-meta-value {
+  color: #fff;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.report-section {
+  margin-bottom: 32px;
+}
+
+.report-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--teal-accent);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.report-text {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: #cbd5e1;
+  margin-bottom: 14px;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin: 16px 0;
+}
+
+.report-table th {
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.report-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.report-signature-block {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+}
+
+.signature-line {
+  width: 240px;
+  border-top: 1px solid #94a3b8;
+  margin-top: 40px;
+  padding-top: 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Print Stylesheet */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .sidebar, .topbar, .report-actions-bar, #toast-container, .modal-overlay {
+    display: none !important;
+  }
+
+  #app-root, .main-content-wrapper, .screen-container {
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .report-document {
+    background: #fff !important;
+    color: #000 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .report-document::before {
+    color: #475569 !important;
+  }
+
+  .report-title-block h1 { color: #0f172a !important; }
+  .report-title-block h2 { color: #0284c7 !important; }
+  .report-section-title { color: #0f766e !important; border-bottom: 1px solid #cbd5e1 !important; }
+  .report-meta-grid { background: #f8fafc !important; border-color: #cbd5e1 !important; }
+  .report-meta-key { color: #64748b !important; }
+  .report-meta-value { color: #0f172a !important; }
+  .report-text { color: #334155 !important; }
+  .report-table th { background: #f1f5f9 !important; color: #475569 !important; border-color: #cbd5e1 !important; }
+  .report-table td { color: #0f172a !important; border-color: #e2e8f0 !important; }
+  .badge { border: 1px solid #94a3b8 !important; color: #0f172a !important; }
+}
