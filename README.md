@@ -115,7 +115,7 @@ git clone YOUR_GITHUB_REPOSITORY_URL
 **2. Open the project folder**
 
 ```bash
-
+  cyber-shield
 ```
 
 **3. Install dependencies**
